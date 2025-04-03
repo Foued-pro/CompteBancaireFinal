@@ -9,7 +9,6 @@ namespace GUICompteBancaire
         public FenetrePrincipale()
         {
             InitializeComponent();
-            listeComptes.Add(new GestionCompte());
         }
 
         private void FenetrePrincipale_Load(object sender, EventArgs e)
@@ -45,11 +44,12 @@ namespace GUICompteBancaire
                         }
 
                     bool found = false;
-                    foreach(GestionCompte gc in listeComptes)
+                    foreach(GestionCompte gc in this.MdiChildren)
                     {
                         if(gc.Fichier == fichier)
                         {
                             found = true;
+                            gc.Activate();
                             break;
                         }
                     }
@@ -58,9 +58,9 @@ namespace GUICompteBancaire
                         GestionCompte nouvelleFenetre = new GestionCompte();
                         nouvelleFenetre.Fichier = fichier;
                         nouvelleFenetre.Compte = compte;
+                        nouvelleFenetre.MdiParent = this;
                         nouvelleFenetre.Show();
 
-                        listeComptes.Add(nouvelleFenetre);
                     }
 
                 }catch (Exception ex)
